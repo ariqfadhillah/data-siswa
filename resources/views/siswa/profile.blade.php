@@ -14,7 +14,7 @@
 									<div class="overlay"></div>
 									<div class="profile-main">
 										<img src="{{$siswa -> getAvatar()}}" class="
-										img-circle" alt="Avatar" style="max-height: 300px">
+										img-circle" alt="Avatar" style="max-height: 100px">
 										<h3 class="name">{{$siswa -> fnama}}</h3>
 										<span class="online-status status-available">Available</span>
 									</div>
