@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiswaExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use App\Siswa;
+use App\Mapel;
+use PDF;
 
 class SiswaController extends Controller
 {
@@ -19,9 +24,17 @@ class SiswaController extends Controller
 
     public function create(Request $request)
     {
-
         $this->validate($request,[
-            'fnama' => 'min:5'
+            'fnama' => 'required',
+            'lnama' => 'required|min:5',
+            'email' => 'required|email|unique:users',
+            'avatar' => 'mimes:jpg,png'
+
+        ],
+        [
+            'unique' => 'Email itu sudah ada',
+            'required' => 'Ini wajib di Isi',
+            'mimes' => 'Kamu harus memuat filenya (dot) jpeg/jpg/png'
         ]);
     	// insert ke tabel users
     	$user = new \App\User;
@@ -34,20 +47,33 @@ class SiswaController extends Controller
 
     	//insert ke tabel siswa
     	$request->request->add(['user_id' => $user->id]);
+
     	$siswa = \App\Siswa::create($request->all());
+        if($request->hasFile('avatar')){
+            $request->file('avatar')->move('images/',$request->file('avatar')->getClientOriginalName());
+            $siswa->avatar = $request->file('avatar')->getClientOriginalName();
+           
+        } $siswa->save();
     	return redirect('/siswa')->with('sukses','Data berhasil di input');
     }
 
-    public function edit($id)
+    public function edit(Siswa $siswa)
     {
-    	$siswa = \App\Siswa::find($id);
     	return view('siswa/edit',['siswa' => $siswa]);
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request,Siswa $siswa)
     {
     	// dd($request -> all());
-    	$siswa = \App\Siswa::find($id);
+        $this->validate($request,[
+            'fnama' => 'required',
+            'lnama' => 'required|min:5',
+            'avatar' => 'mimes:jpg,png,jpeg'
+
+        ],
+        [
+            'required' => 'Ini wajib di Isi'
+        ]);
     	$siswa->update($request->all());
     	if($request->hasFile('avatar')){
     		$request->file('avatar')->move('images/',$request->file('avatar')->getClientOriginalName());
@@ -57,16 +83,67 @@ class SiswaController extends Controller
     	return redirect('/siswa')->with('sukses','Data berhasil di update');
     }
 
-    public function delete($id)
+    public function delete(Siswa $siswa)
     {	
-    	$siswa = \App\Siswa::find($id);
     	$siswa->delete();
     	return redirect('/siswa')->with('sukses','Data berhasil di delete');
     }
 
-    public function profile($id)
+    public function profile(Siswa $siswa)
     {
-    	$siswa = \App\Siswa::find($id);
-    	return view('siswa.profile',['siswa' => $siswa]);
+    	// $siswa = \App\Siswa::find($id);
+        $mapels = \App\Mapel::all();
+
+        //membuat categoriex
+        $categories = [];
+        $dataseries = [];
+
+
+        foreach($mapels as $m){
+            if($siswa->mapel()->wherePivot('mapel_id',$m->id)->first()){
+                $categories[] = $m->nama;
+                $dataseries[] = $siswa->mapel()->wherePivot('mapel_id', $m->id)->first()->pivot->nilai;
+            }
+        }
+
+        // dd(json_encode($dataseries));
+        // dd($dataseries);
+
+    	return view('siswa.profile', compact('siswa','mapels','categories','dataseries'));
+
+    }
+
+    public function addnilai(Request $request, $idsiswa)
+    {
+        // dd($request->all());
+        $siswa = \App\Siswa::find($idsiswa);
+        if($siswa->mapel()->where('mapel_id' ,$request->mapel)->exists()){
+            return redirect('siswa/' .$idsiswa .'/profile')->with('error','Nilai untuk mapel tersebut, sudah terisi.');
+
+        }
+
+        $siswa->mapel()->attach($request->mapel,['nilai' => $request->nilai]);
+
+        return redirect('siswa/'.$idsiswa. '/profile')->with('sukses','Data Nilai berhasil terinput');
+
+    }
+
+    public function deletenilai($idsiswa, $idmapel)
+    {
+        $siswa = \App\Siswa::find($idsiswa);
+        $siswa->mapel()->detach($idmapel);
+        return redirect()->back()->with('sukses', 'Data Berhasil di Delete');
+    }
+
+    public function exportExcel() 
+    {
+        return Excel::download(new SiswaExport, 'Siswa.xlsx');
+    }
+
+    public function exportPDF()
+    {
+        $siswa= \App\Siswa::all();
+        $pdf = PDF::loadView('export.siswapdf',['siswa' => $siswa]);
+        return $pdf->download('siswa.pdf');
     }
 }
