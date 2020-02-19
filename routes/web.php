@@ -41,15 +41,37 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 	// Guru Featured
 	Route::get('/guru/{id}/profile','GuruController@profile');
 
-	// Posting Blog 
+	// Blog 
 	Route::get('/posts','PostController@index')->name('post.index');
+
+	// Add Blog
 	Route::get('/post/add',[
 	'uses' => 'PostController@add',
 	'as' => 'post.add'
 	]);
+
+	// Added Blog
 	Route::post('/post/create',[
 	'uses' => 'PostController@create',
 	'as' => 'post.create'
+	]);
+
+	// Edit Blog
+	Route::get('/post/{post}/edit',[
+	'uses' => 'PostController@edit',
+	'as' => 'post.edit'
+	]);
+
+	// Update Blog
+	Route::post('/post/{post}/update',[
+	'uses' => 'PostController@update',
+	'as' => 'post.update'
+	]);
+
+	// Delete Blog
+	Route::get('/post/{post}/delete',[
+	'uses' => 'PostController@delete',
+	'as' => 'post.delete'
 	]);
 });
 

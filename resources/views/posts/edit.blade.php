@@ -9,22 +9,22 @@
 				<div class="col-md-12">
 					<div class="panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">Tambah data blog</h3>
+							<h3 class="panel-title">Edit data blog</h3>
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-8">
-								<form action="{{route('post.create')}}" method="post" enctype="multipart/form-data">
+								<form action="{{route('post.update',$post->id)}}" method="post" enctype="multipart/form-data">
 									{{csrf_field()}}
 									<div class="form-group{{$errors->has('fnama') ? ' has-error' : ''}}">
 										<label for="exampleInputEmail1">Title</label>
-										<input name="title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Title" value="{{old('title')}}" required>
+										<input name="title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Title" value="{{$post->title}}" required>
 										@if($errors->has('title'))
 											<span class="help-block">{{$errors->first('title')}}</span>
 										@endif
 									</div>
 										<label for="exampleInputEmail1">Content</label>
-										<textarea name="content" class="form-control" id="content" rows="3">{{old('content')}}</textarea>
+										<textarea name="content" class="form-control" id="content" rows="3">{{$post->content}}</textarea>
 									<div class="form-group">
 										
 									</div>
@@ -37,7 +37,7 @@
 													<i class="fa fa-picture-o"></i> Choose
 												</a>
 											</span>
-											<input name="thumbnail" id="image" class="form-control" type="text" readonly>
+											<input name="thumbnail" id="image" class="form-control" value="{{$post->thumbnail}}" type="text" readonly>
 										</div>
 											<img id="holder" style="margin-top:15px;max-height:100px;">
 											<div class="form-group">

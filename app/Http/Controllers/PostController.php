@@ -31,4 +31,23 @@ class PostController extends Controller
         
         return redirect()->route('post.index')->with('sukses','Data berhasil di input');
     }
+
+    public function edit(Post $post)
+    {
+        return view('posts/edit',['post' => $post]);
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        // dd($request->all());
+        $post->update($request->all());
+
+        return redirect()->route('post.index')->with('sukses','Data berhasil di update');
+    }
+
+    public function delete(Post $post)
+    {
+        $post->delete();
+        return redirect()->back()->with('sukses','Data berhasil di delete');
+    }
 }

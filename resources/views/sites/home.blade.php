@@ -599,7 +599,12 @@
 							</a>
 							<p id="cut-text">
 								<!-- {!! $post->content!!} -->
-								{!! \Illuminate\Support\Str::limit($post->content, 250,  $end='...') !!}
+								<!-- {!! \Illuminate\Support\Str::limit($post->content, 250,  $end='...') !!} -->
+								@php
+								$num_char = 50;
+								$text = $post->content;
+								echo substr($text, 0, $num_char) . '...';
+								@endphp
 							</p>
 							<a href="{{route('site.single.post', $post->slug)}}" class="details-btn d-flex justify-content-center align-items-center"><span class="details">Details</span><span class="lnr lnr-arrow-right"></span></a>									
 						</div>

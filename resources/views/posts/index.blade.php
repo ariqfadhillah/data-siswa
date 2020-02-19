@@ -9,11 +9,6 @@
 
 <div class="main">
 	<div class="main-content">
-		<!-- @if(session('sukses'))
-		<div class="alert alert-success" role="alert">
-			{{session('sukses')}}
-		</div>
-		@endif -->
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
@@ -43,7 +38,7 @@
 										<td>{{$post->user->name}}</td>
           
 											<td><a target="_blank" href="{{route('site.single.post',$post->slug)}}" class="btn btn-info btn-sm">View</a>
-											<a href="/posts/{{$post->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
+											<a href="{{route('post.edit',$post->id)}}" class="btn btn-warning btn-sm">Edit</a>
 											<a href="#" class="btn btn-danger btn-sm delete" post-id ="{{$post->id}}">Delete</a></td>
 									</tr>@endforeach
 								</tbody>
@@ -73,7 +68,7 @@
 		.then((willDelete) => {
 
 			if (willDelete) {
-				window.location = "/posts/"+post_id+"/delete";
+				window.location = "/post/"+post_id+"/delete";
 				swal("Poof! Your imaginary file has been deleted!", {
 					icon: "success",
 				});
