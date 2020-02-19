@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -14,9 +15,12 @@ class AuthController extends Controller
     public function postlogin(Request $request)
     {
     	if(Auth::attempt($request->only('email','password'))){
-    		return redirect('/dashboard');
-    	}
-    	return redirect('/login');
+    		return Redirect::intended('/dashboard'); //see this line
+            
+        }else{
+                
+            return Redirect::to('/login')->with('error', 'Invalid username or password')->withInput();
+        }
     }
 
     public function logout()

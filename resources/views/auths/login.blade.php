@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="{{asset('admin/assets/vendor/linearicons/style.css')}}">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="{{asset('admin/assets/css/main.css')}}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="{{asset('admin/assets/css/demo.css')}}">
 	<!-- GOOGLE FONTS -->
@@ -37,11 +38,11 @@
 								{{csrf_field()}}
 								<div class="form-group">
 									<label for="signin-email" class="control-label sr-only">Email</label>
-									<input name="email" type="email" class="form-control" id="signin-email" value="samuel.gold@domain.com" placeholder="Email">
+									<input name="email" type="email" class="form-control" id="signin-email" value="{{old('email')}}" placeholder="Email" required>
 								</div>
 								<div class="form-group">
 									<label for="signin-password" class="control-label sr-only">Password</label>
-									<input name="password" type="password" class="form-control" id="signin-password" value="thisisthepassword" placeholder="Password">
+									<input name="password" type="password" class="form-control" id="signin-password" value="{{old('password')}}" placeholder="Password" required>
 								</div>
 								
 								<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
@@ -63,5 +64,13 @@
 	</div>
 	<!-- END WRAPPER -->
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script>
+		@if(Session::has('error')){
+			toastr.error('{{Session::get('error')}}', 'Afwan')
+		}
+		@endif
+	</script>
 
 </html>

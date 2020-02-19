@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function posts()
+    {
+       return $this->hasMany(Post::class);
+        // artinya model ini memiliki banyak data dari class yang didalam kurung
+    }
 }
