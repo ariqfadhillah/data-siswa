@@ -1,10 +1,5 @@
 @extends('layouts.master')
 
-@section('header')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-@stop
-
 @section('content')
 
 <div class="main">
@@ -79,16 +74,4 @@
 	});
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-	<script>
-		@if(Session::has('sukses')){
-			toastr.success('{{Session::get('sukses')}}', 'Alhamdulillah')
-		}
-		@endif
-
-		@if(Session::has('error')){
-			toastr.error('{{Session::get('error')}}', 'Afwan')
-		}
-		@endif
-	</script>
 @stop
