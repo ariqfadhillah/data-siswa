@@ -23,30 +23,19 @@
 							
 						</div>
 						<div class="panel-body">
-							<table class="table table-hover">
+							<table class="table table-hover" id="tables">
 								<thead>
 									<tr>
-										<th>Nama Depan </th>
-										<th>Nama Belakang </th>
+										<th>Nama Lengkap </th>
 										<th>Jenis Kelamin </th>
 										<th>Agama</th>
 										<th>Alamat</th>
 										<th>RATA - RATA</th>
 										<th>Aksi</th>
+										<th></th>
 									</tr>
 								</thead>
-								<tbody>@foreach($data_siswa as $siswa)
-									<tr>
-										<td><a href="/siswa/{{$siswa ->id}}/profile">{{$siswa->fnama}}</a></td>
-										<td><a href="/siswa/{{$siswa ->id}}/profile">{{$siswa->lnama}}</a></td>
-										<td>{{$siswa->jkelamin}}</td>
-										<td>{{$siswa->agama}}</td>
-										<td>{{$siswa->alamat}}</td>
-										<td>{{$siswa->nilaiRataRata()}}</td>
-
-										<td><a href="/siswa/{{$siswa->id}}/edit" class="btn btn-warning btn-sm">Edit</a></td>
-										<td><a href="#" class="btn btn-danger btn-sm delete" siswa-id ="{{$siswa->id}}" >Delete</a></td>
-									</tr>@endforeach
+								<tbody>
 								</tbody>
 							</table>
 						</div>
@@ -148,6 +137,49 @@
 @section('footer')
 
 <script>
+	$(document).ready( function () {
+    $('#tables').DataTable({
+    	processing: true,
+            responsive: true,
+            serverSide: true,
+            ajax: "{{route('ajax.get')}}",
+            columns: [
+            // or just disable search since it's not really searchable. just add searchable:false
+            {data: 'nm_lngkap', name: 'nm_lngkap'},
+            {data: 'jkelamin', name: 'jkelamin'},
+            {data: 'agama', name: 'agama'},
+            {data: 'alamat', name: 'alamat'},
+            {data: 'rata2_nilai', name: 'rata2_nilai'},@if(auth()->user()->role == 'admin')
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'delete', name: 'delete', orderable: false, searchable: false}@endif
+
+        ]
+	});
+	$('#delete').click(function(){
+		var siswa_id = $(this).attr('id');
+		swal({
+			  title: "Are you sure?",
+			  text: "Once deleted, you will not be able to recover this imaginary file!",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+
+			  if (willDelete) {
+			  	window.location = "/siswa/"+siswa_id+"/delete";
+			    swal("Poof! Your imaginary file has been deleted!", {
+			      icon: "success",
+			    });
+			  } else {
+			    swal("Your imaginary file is safe!");
+			  }
+			});
+	});
+} );
+</script>
+
+<!-- <script>
 	$('.delete').click(function(){
 		var siswa_id = $(this).attr('siswa-id');
 		swal({
@@ -169,5 +201,5 @@
 			  }
 			});
 	});
-</script>
+</script> -->
 @stop

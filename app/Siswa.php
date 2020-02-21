@@ -58,4 +58,10 @@ class Siswa extends Model
     {
         return $this->fnama.' '.$this->lnama;
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User')->withDefault(['avatar' => 'default.jpg']);
+    }
+    
 }

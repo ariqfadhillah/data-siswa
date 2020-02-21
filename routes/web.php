@@ -79,6 +79,11 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 Route::group(['middleware' => ['auth','checkRole:admin,siswa']],function(){
 	Route::get('/dashboard','DashboardController@index');
 
+	Route::get('getdatasiswa',[
+	'uses' => 'SiswaController@get',
+	'as' => 'ajax.get'
+]);
+
 Route::get('/{slug}',[
 	'uses' => 'SiteController@singlePost',
 	'as' => 'site.single.post'
