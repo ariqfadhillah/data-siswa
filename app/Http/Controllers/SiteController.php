@@ -47,7 +47,9 @@ class SiteController extends Controller
 
     public function singlePost($slug)
     {
-        $post = Post::where('slug', '=' ,$slug)->first();
+        // Menampilkan data dalam table post yang sesuai dengan parameter
+        $post = Post::where('slug', '=' ,$slug)->first(); 
+
         return view('sites.singlepost', compact(['post']));
     }
 

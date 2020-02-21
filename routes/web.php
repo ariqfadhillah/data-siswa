@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth','checkRole:admin,siswa']],function(){
 	'as' => 'ajax.get'
 ]);
 
+// tampilan posting blog slugnya
 Route::get('/{slug}',[
 	'uses' => 'SiteController@singlePost',
 	'as' => 'site.single.post'
