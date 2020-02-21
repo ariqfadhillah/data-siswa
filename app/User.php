@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function siswa()
     {
-        return $this->hasOne('App\Siswa');
+        return $this->hasOne(Siswa::class);
         // artinya model ini memiliki satu hubungan dari class yang didalam kurung
     }
 }

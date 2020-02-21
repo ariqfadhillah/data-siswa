@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     protected $table = 'siswa';
-    protected $fillable = ['fnama','lnama','jkelamin','agama','alamat','avatar','user_id'];
+    protected $fillable = ['fnama','lnama','jkelamin','agama','alamat','avatar','user_id',];
 
 
     public function getAvatar()
@@ -61,7 +61,7 @@ class Siswa extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User')->withDefault(['avatar' => 'default.jpg']);
+        return $this->belongsTo(User::class)->withDefault(['avatar' => 'default.jpg']);
     }
     
 }
