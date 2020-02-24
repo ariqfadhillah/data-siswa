@@ -10,6 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('kirimemail', function(){
+	\Mail::raw('Halo Siswa Baru', function ($message) {
+	    $message->to('ariqsaja992@gmail.com', '');
+	    $message->subject('Pendaftaran Siswa');
+	});
+});
+
 // tampilan home
 Route::get('/','SiteController@home');
 Route::get('/register','SiteController@register');

@@ -42,6 +42,16 @@ class SiteController extends Controller
             $siswa->avatar = $request->file('avatar')->getClientOriginalName();
            
         } $siswa->save();
+
+        // disini sintaks dari laravel. yang berguna untuk post email kita.
+        \Mail::raw('Testing web notifikasi email. maaf mengganggu ketertiban umum ya. maklum anak magang, syukuri apa adanya aja alhamdulillah:D '.' '.$user->name, function ($message) use($user) {
+            $message->to($user->email, $user->name);
+            $message->subject('#testing sorry ganggu ya hehe jazakillah khair');
+            $message->from('ariqsaja99@gmail.com','Test Mail');
+            $message->replyTo('ariqsaja992@gmail.com', '');
+            $message->priority(3);
+
+        });
     	return redirect('/')->with('sukses','Data berhasil di input');
    	}
 

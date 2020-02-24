@@ -58,7 +58,7 @@
 						<nav id="nav-menu-container">
 							<ul class="nav-menu">
 								<li><a href="/">Home</a></li>	          		          
-								<li><a href="/register">Contact</a></li>
+								<li><a href="/register">Register</a></li>
 							</ul>
 						</nav><!-- #nav-menu-container -->		    		
 					</div>
