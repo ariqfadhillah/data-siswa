@@ -56,6 +56,8 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 	'as' => 'post.create'
 	]);
 
+	
+
 	// Edit Blog
 	Route::get('/post/{post}/edit',[
 	'uses' => 'PostController@edit',
@@ -75,6 +77,11 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 	]);
 });
 
+// Check hanya siswa yang bisa kesini
+Route::group(['middleware' => ['auth','checkRole:siswa']],function(){
+	Route::get('profilsaya','SiswaController@profilsaya');
+	});
+
 // Check admin & user bisa kesini
 Route::group(['middleware' => ['auth','checkRole:admin,siswa']],function(){
 	Route::get('/dashboard','DashboardController@index');
@@ -82,12 +89,12 @@ Route::group(['middleware' => ['auth','checkRole:admin,siswa']],function(){
 	Route::get('getdatasiswa',[
 	'uses' => 'SiswaController@get',
 	'as' => 'ajax.get'
-]);
+	]);
 
 // tampilan posting blog slugnya
 Route::get('/{slug}',[
 	'uses' => 'SiteController@singlePost',
 	'as' => 'site.single.post'
-]);
+	]);
 
 });
