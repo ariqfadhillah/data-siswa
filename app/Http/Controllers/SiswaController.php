@@ -173,4 +173,11 @@ class SiswaController extends Controller
         $siswa = auth()->user()->siswa;
         return view('siswa.profilsaya', compact(['siswa'])) ;
     }
+
+    public function importExcel(Request $request)
+    {
+        Excel::import(new \App\Imports\SiswaImport, $request->file('data_siswa'));
+        // dd($request->all());
+        return redirect('/siswa')->with('sukses', 'Data Berhasil di Import');
+    }
 }

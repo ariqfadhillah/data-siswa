@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 	Route::get('/siswa/{id}/{idmapel}/deletenilai','SiswaController@deletenilai');
 	Route::get('/siswa/exportExcel/','SiswaController@exportExcel');
 	Route::get('/siswa/exportPDF/','SiswaController@exportPDF');
+	Route::post('/siswa/import/','SiswaController@importExcel')->name('siswa.import');
 
 	// Guru Featured
 	Route::get('/guru/{id}/profile','GuruController@profile');

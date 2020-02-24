@@ -1,9 +1,12 @@
 @extends('layouts.master')
 
+@section('header')
+@stop
+
 @section('content')
 
 <div class="main">
-	<div class="main-content">
+	<div class="main-content ">
 		<!-- @if(session('sukses'))
 		<div class="alert alert-success" role="alert">
 			{{session('sukses')}}
@@ -16,6 +19,10 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">Selamat Datang Perindu Syurga <b>Batch 1</b> <br> Data Siswa</h3>
 							<div class="right">
+								<!-- Button trigger modal -->
+								<a type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#importSiswa">
+								Import XLS
+								</a>
 								<a href="/siswa/exportExcel" class="btn btn-sm btn-primary">Export to Excel</a>
 								<a href="/siswa/exportPDF" class="btn btn-sm btn-primary">Export to PDF</a>
 								<button type="button" class="btn"><i class="lnr lnr-plus-circle" data-toggle="modal" data-target="#exampleModal"></i></button>
@@ -130,6 +137,30 @@
 					</div>
 				</div>
 			</div>	
+		</div>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="importSiswa" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{!!Form::open(['route' =>'siswa.import', 'class' => 'form-horizontal','enctype' => 'multipart/form-data'])!!}
+
+						{!!Form::file('data_siswa')!!}
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-sm btn-primary" value="Import">
+					</form>
+					</div>
+				</div>
+			</div>
 		</div>
 
 @stop
