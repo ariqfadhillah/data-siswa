@@ -15,7 +15,7 @@ Salam,<br>
 MAIL_HOST=smtp.googlemail.com
 MAIL_PORT=465
 MAIL_USERNAME=ariqsaja99@gmail.com
-MAIL_PASSWORD=saitoasuka99
+MAIL_PASSWORD=PASSWORD HERE
 MAIL_ENCRYPTION=ssl -->
 
 <!-- MAIL_DRIVER=smtp
