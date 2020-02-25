@@ -1,14 +1,14 @@
 @component('mail::message')
-# Assalamualaikum, Afwan ya Maaf saya mengganggu nih. Semangat kerja lillah nya
+# Assalamualaikum, Afwan ya Maaf saya mengganggu nih. Semangat kerja lillah nya 
 
-Testing website ini berhasil. . boleh kamu kirim screenshotnya ke ariq sekarang Jazakillah happy
+Jika Testing website ini berhasil. . boleh kamu kirim screenshotnya ke ariq sekarang Jazakillah happy ya
 
-@component('mail::button', ['url' => 'https://api.whatsapp.com/send?phone=6285888836163&text=Saya%20telah%20mendapat%20pesan%20kamu%20mas%20ariq%20Allaahuma%20Baarik%20Fiihi.'])
+@component('mail::button', ['url' => 'https://soshumanity-dev.act.id/'])
 Klik disini
 @endcomponent
 
-Thanks,<br>
-{{ config('app.Sekolah Relawan') }}
+Salam,<br>
+{{ config('app.name') }}
 @endcomponent
 
 <!-- MAIL_DRIVER=smtp
@@ -18,3 +18,10 @@ MAIL_USERNAME=ariqsaja99@gmail.com
 MAIL_PASSWORD=saitoasuka99
 MAIL_ENCRYPTION=ssl -->
 
+<!-- MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=1e649b9e407762
+MAIL_PASSWORD=f3c90114913128
+MAIL_FROM_ADDRESS=ariqsaja99@gmail.com
+MAIL_FROM_NAME="Sekolah Relawan" -->

@@ -45,15 +45,15 @@ class SiteController extends Controller
         } $siswa->save();
 
         // disini sintaks dari laravel. yang berguna untuk post email kita.
-        // \Mail::raw('Testing web notifikasi email. maaf mengganggu ketertiban umum ya. maklum anak magang, syukuri apa adanya aja alhamdulillah:D '.' '.$user->name, function ($message) use($user) {
-        //     $message->to($user->email, $user->name);
-        //     $message->subject('#testing sorry ganggu ya hehe jazakillah khair');
-        //     $message->from('ariqsaja99@gmail.com','Test Mail');
-        //     $message->replyTo('ariqsaja992@gmail.com', '');
-        //     $message->priority(1);
+        \Mail::raw('Testing web notifikasi email. maaf mengganggu ketertiban umum ya. maklum anak magang, syukuri apa adanya aja ya masya Allah :D '.' '.$user->name, function ($message) use($user) {
+            $message->to($user->email, $user->name);
+            $message->subject('#Testing notifikasi');
+            $message->from('ariqsaja99@gmail.com','Verified account');
+            $message->replyTo('ariqsaja992@gmail.com', 'Verified account');
+            $message->priority(1);
             
-        //     //Values: 1 = High, 3 = Normal, 5 = Low
-        // });
+            //Values: 1 = High, 3 = Normal, 5 = Low
+        });
 
         \Mail::to($user->email)->send(new NotifPendaftaranSiswa);
     	return redirect('/')->with('sukses','Data berhasil di input');
