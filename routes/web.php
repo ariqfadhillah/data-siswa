@@ -11,12 +11,22 @@
 |
 */
 
-Route::get('kirimemail', function(){
-	\Mail::raw('Halo Siswa Baru', function ($message) {
-	    $message->to('ariqsaja992@gmail.com', '');
-	    $message->subject('Pendaftaran Siswa');
-	});
-});
+// Route::get('tanggallahir', function(){
+// 	foreach (\App\Siswa::all() as $siswa) {
+// 		$tanggal_mulai= strtotime('1995-01-01');
+// 		$tanggal_akhir= strtotime('1999-01-01');
+
+// 		$tanggal= rand($tanggal_mulai,$tanggal_akhir);
+// 		$tgl_lahir= date('Y-m-d' ,$tanggal);
+// 		$siswa->tgl_lahir= $tgl_lahir;
+// 		$siswa->save();
+// 	}
+// }); code untuk logic membuat field tgl_lahir dari thn 1995 hingg 1999
+
+	Route::get('trick',[
+	'uses' => 'TrickController@pertama',
+	'as' => 'trick.pertama'
+]);
 
 // tampilan home
 Route::get('/','SiteController@home');
