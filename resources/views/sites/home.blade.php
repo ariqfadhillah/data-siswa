@@ -13,7 +13,7 @@
 
 @section('content')
 	<!-- start banner Area -->
-			<section class="banner-area relative" id="home" style="background: url('{{config('sekolah.image_banner_url')}}'); background-size: cover;">
+			<section class="banner-area relative" id="home" style="background: url('{{config('sekolah.image_banner_url')}}'); background-size: cover; ">
 				<div class="overlay overlay-bg"></div>	
 				<div class="container">
 					<div class="row fullscreen d-flex align-items-center justify-content-between">
@@ -342,84 +342,24 @@
 					</div>								
 					<div class="row">
 						<div class="active-upcoming-event-carusel">
+							@foreach($events as $post)
 							<div class="single-carusel row align-items-center">
 								<div class="col-12 col-md-6 thumb">
-									<img class="img-fluid" src="{{asset('frontend/img/e1.jpg')}}" alt="">
+									<img class="img-fluid" src="{{$post->thumbnail()}}" alt="{{$post->user->name}}">
 								</div>
 								<div class="detials col-12 col-md-6">
-									<p>25th February, 2018</p>
-									<a href="#"><h4>The Universe Through
-									A Child S Eyes</h4></a>
+									<p>{{$post->created_at->diffForHumans()}}</p>
+									<a href="{{route('site.single.post', $post->slug)}}"><h4>{{$post->title}}</h4></a>
 									<p>
-										For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
+										@php
+										$num_char = 50;
+										$text = $post->content;
+										echo substr($text, 0, $num_char) . '...';
+										@endphp
 									</p>
 								</div>
 							</div>
-							<div class="single-carusel row align-items-center">
-								<div class="col-12 col-md-6 thumb">
-									<img class="img-fluid" src="{{asset('frontend/img/e2.jpg')}}" alt="">
-								</div>
-								<div class="detials col-12 col-md-6">
-									<p>25th February, 2018</p>
-									<a href="#"><h4>The Universe Through
-									A Child S Eyes</h4></a>
-									<p>
-										For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
-									</p>
-								</div>
-							</div>	
-							<div class="single-carusel row align-items-center">
-								<div class="col-12 col-md-6 thumb">
-									<img class="img-fluid" src="{{asset('frontend/img/e1.jpg')}}" alt="">
-								</div>
-								<div class="detials col-12 col-md-6">
-									<p>25th February, 2018</p>
-									<a href="#"><h4>The Universe Through
-									A Child S Eyes</h4></a>
-									<p>
-										For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
-									</p>
-								</div>
-							</div>	
-							<div class="single-carusel row align-items-center">
-								<div class="col-12 col-md-6 thumb">
-									<img class="img-fluid" src="{{asset('frontend/img/e1.jpg')}}" alt="">
-								</div>
-								<div class="detials col-12 col-md-6">
-									<p>25th February, 2018</p>
-									<a href="#"><h4>The Universe Through
-									A Child S Eyes</h4></a>
-									<p>
-										For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
-									</p>
-								</div>
-							</div>
-							<div class="single-carusel row align-items-center">
-								<div class="col-12 col-md-6 thumb">
-									<img class="img-fluid" src="{{asset('frontend/img/e2.jpg')}}" alt="">
-								</div>
-								<div class="detials col-12 col-md-6">
-									<p>25th February, 2018</p>
-									<a href="#"><h4>The Universe Through
-									A Child S Eyes</h4></a>
-									<p>
-										For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
-									</p>
-								</div>
-							</div>	
-							<div class="single-carusel row align-items-center">
-								<div class="col-12 col-md-6 thumb">
-									<img class="img-fluid" src="{{asset('frontend/img/e1.jpg')}}" alt="">
-								</div>
-								<div class="detials col-12 col-md-6">
-									<p>25th February, 2018</p>
-									<a href="#"><h4>The Universe Through
-									A Child S Eyes</h4></a>
-									<p>
-										For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
-									</p>
-								</div>
-							</div>																						
+							@endforeach																					
 						</div>
 					</div>
 				</div>	
@@ -432,9 +372,10 @@
 				<div class="container">				
 					<div class="row">
 						<div class="active-review-carusel">
+							@foreach($courses as $post)
 							<div class="single-review item">
 								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Fannie Rowe</h4></a>
+									<a href="{{route('site.single.post', $post->slug)}}"><h4>{{$post->user->name}}</h4></a>
 									<div class="star">
 										<span class="fa fa-star checked"></span>
 										<span class="fa fa-star checked"></span>
@@ -444,115 +385,14 @@
 									</div>
 								</div>
 								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
+									@php
+									$num_char = 50;
+									$text = $post->content;
+									echo substr($text, 0, $num_char) . '...';
+									@endphp
 								</p>
 							</div>
-							<div class="single-review item">
-								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Hulda Sutton</h4></a>
-									<div class="star">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</div>
-								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-								</p>
-							</div>
-							<div class="single-review item">
-								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Fannie Rowe</h4></a>
-									<div class="star">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</div>
-								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-								</p>
-							</div>
-							<div class="single-review item">
-								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Hulda Sutton</h4></a>
-									<div class="star">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</div>
-								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-								</p>
-							</div>	
-							<div class="single-review item">
-								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Fannie Rowe</h4></a>
-									<div class="star">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</div>
-								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-								</p>
-							</div>
-							<div class="single-review item">
-								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Hulda Sutton</h4></a>
-									<div class="star">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</div>
-								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-								</p>
-							</div>
-							<div class="single-review item">
-								<img src="{{asset('frontend/img/r1.png')}}" alt="">
-								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Fannie Rowe</h4></a>
-									<div class="star">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</div>
-								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-								</p>
-							</div>
-							<div class="single-review item">
-								<div class="title justify-content-start d-flex">
-									<a href="#"><h4>Hulda Sutton</h4></a>
-									<div class="star">
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</div>
-								<p>
-									Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-								</p>
-							</div>																												
+							@endforeach																											
 						</div>
 					</div>
 				</div>	
@@ -591,17 +431,17 @@
 						@foreach($posts as $post)
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="{{$post->thumbnail()}}" alt="">								
+								<img class="img-fluid" src="{{$post->thumbnail()}}" alt="{{$post->title}}">								
 							</div>
 							<p class="meta">{{$post->created_at->diffForHumans()}} |  Dituliskan oleh <a href="#">{{$post->user->name}}</a></p>
-							<a href="#">
+							<a href="{{route('site.single.post', $post->slug)}}">
 								<h5>{{$post->title}}</h5>
 							</a>
 							<p id="cut-text">
 								<!-- {!! $post->content!!} -->
 								<!-- {!! \Illuminate\Support\Str::limit($post->content, 250,  $end='...') !!} -->
 								@php
-								$num_char = 50;
+								$num_char = 90;
 								$text = $post->content;
 								echo substr($text, 0, $num_char) . '...';
 								@endphp

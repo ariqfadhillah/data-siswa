@@ -11,7 +11,7 @@ class Post extends Model
     // relasinya user => punya byk Post hasMany
     // post => dimiliki user belongsTo 
     protected $fillable = ['title', 'content', 'thumbnail','slug','user_id'];
-    protected $dates = ['created_at'];
+    
 
      /**
      * Return the sluggable configuration array for this model.

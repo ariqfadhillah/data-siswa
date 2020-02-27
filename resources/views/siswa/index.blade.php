@@ -1,9 +1,12 @@
 @extends('layouts.master')
 
+@section('header')
+@stop
+
 @section('content')
 
 <div class="main">
-	<div class="main-content">
+	<div class="main-content ">
 		<!-- @if(session('sukses'))
 		<div class="alert alert-success" role="alert">
 			{{session('sukses')}}
@@ -16,6 +19,10 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">Selamat Datang Perindu Syurga <b>Batch 1</b> <br> Data Siswa</h3>
 							<div class="right">
+								<!-- Button trigger modal -->
+								<a type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#importSiswa">
+								Import XLS
+								</a>
 								<a href="/siswa/exportExcel" class="btn btn-sm btn-primary">Export to Excel</a>
 								<a href="/siswa/exportPDF" class="btn btn-sm btn-primary">Export to PDF</a>
 								<button type="button" class="btn"><i class="lnr lnr-plus-circle" data-toggle="modal" data-target="#exampleModal"></i></button>
@@ -23,30 +30,19 @@
 							
 						</div>
 						<div class="panel-body">
-							<table class="table table-hover">
+							<table class="table table-hover" id="tables">
 								<thead>
 									<tr>
-										<th>Nama Depan </th>
-										<th>Nama Belakang </th>
+										<th>Nama Lengkap </th>
 										<th>Jenis Kelamin </th>
 										<th>Agama</th>
 										<th>Alamat</th>
 										<th>RATA - RATA</th>
 										<th>Aksi</th>
+										<th></th>
 									</tr>
 								</thead>
-								<tbody>@foreach($data_siswa as $siswa)
-									<tr>
-										<td><a href="/siswa/{{$siswa ->id}}/profile">{{$siswa->fnama}}</a></td>
-										<td><a href="/siswa/{{$siswa ->id}}/profile">{{$siswa->lnama}}</a></td>
-										<td>{{$siswa->jkelamin}}</td>
-										<td>{{$siswa->agama}}</td>
-										<td>{{$siswa->alamat}}</td>
-										<td>{{$siswa->nilaiRataRata()}}</td>
-
-										<td><a href="/siswa/{{$siswa->id}}/edit" class="btn btn-warning btn-sm">Edit</a></td>
-										<td><a href="#" class="btn btn-danger btn-sm delete" siswa-id ="{{$siswa->id}}" >Delete</a></td>
-									</tr>@endforeach
+								<tbody>
 								</tbody>
 							</table>
 						</div>
@@ -143,11 +139,78 @@
 			</div>	
 		</div>
 
+
+		<!-- Modal -->
+		<div class="modal fade" id="importSiswa" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{!!Form::open(['route' =>'siswa.import', 'class' => 'form-horizontal','enctype' => 'multipart/form-data'])!!}
+
+						{!!Form::file('data_siswa')!!}
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-sm btn-primary" value="Import">
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 @stop
 
 @section('footer')
 
 <script>
+	$(document).ready( function () {
+    $('#tables').DataTable({
+    	processing: true,
+            responsive: true,
+            serverSide: true,
+            ajax: "{{route('ajax.get')}}",
+            columns: [
+            // or just disable search since it's not really searchable. just add searchable:false
+            {data: 'nm_lngkap', name: 'nm_lngkap'},
+            {data: 'jkelamin', name: 'jkelamin'},
+            {data: 'agama', name: 'agama'},
+            {data: 'alamat', name: 'alamat'},
+            {data: 'rata2_nilai', name: 'rata2_nilai'},@if(auth()->user()->role == 'admin')
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'delete', name: 'delete', orderable: false, searchable: false}@endif
+
+        ]
+	});
+	$('#delete').click(function(){
+		var siswa_id = $(this).attr('id');
+		swal({
+			  title: "Are you sure?",
+			  text: "Once deleted, you will not be able to recover this imaginary file!",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+
+			  if (willDelete) {
+			  	window.location = "/siswa/"+siswa_id+"/delete";
+			    swal("Poof! Your imaginary file has been deleted!", {
+			      icon: "success",
+			    });
+			  } else {
+			    swal("Your imaginary file is safe!");
+			  }
+			});
+	});
+} );
+</script>
+
+<!-- <script>
 	$('.delete').click(function(){
 		var siswa_id = $(this).attr('siswa-id');
 		swal({
@@ -169,5 +232,5 @@
 			  }
 			});
 	});
-</script>
+</script> -->
 @stop

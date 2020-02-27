@@ -146,4 +146,38 @@ class SiswaController extends Controller
         $pdf = PDF::loadView('export.siswapdf',['siswa' => $siswa]);
         return $pdf->download('siswa.pdf');
     }
+
+    public function get()
+    {
+        $siswa= Siswa::select('siswa.*');
+        
+        return \DataTables::eloquent($siswa)
+        ->addColumn('nm_lngkap', function($s){
+            return $s->fnama.' '.$s->lnama;
+        })
+        ->addColumn('rata2_nilai', function($s){
+            return $s->nilaiRataRata();
+        })
+        ->addColumn('action', function($s){
+            return '<a href="/siswa/'.$s->id.'/edit" class="btn btn-warning btn-sm">Edit</a>';
+        })
+        ->editColumn('delete', function($s){
+            return '<a href="/siswa/'.$s->id.'/delete" class="btn btn-danger btn-sm delete" id ='.$s->id.' >Delete</a>';
+        })
+        ->rawColumns(['delete','action','rata2_nilai','nm_lngkap'])
+        ->toJson();
+    }
+
+    public function profilsaya()
+    {
+        $siswa = auth()->user()->siswa;
+        return view('siswa.profilsaya', compact(['siswa'])) ;
+    }
+
+    public function importExcel(Request $request)
+    {
+        Excel::import(new \App\Imports\SiswaImport, $request->file('data_siswa'));
+        // dd($request->all());
+        return redirect('/siswa')->with('sukses', 'Data Berhasil di Import');
+    }
 }

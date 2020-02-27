@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Mail\NotifPendaftaranSiswa;
 use App\Post;
+use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
     public function home()
     {
-        $posts = \App\Post::all();
-        return view('sites.home', compact('posts'));
+        $courses = \App\Post::latest()->get();
+        $events = \App\Post::latest()->get();
+        $posts = \App\Post::latest()->take(4)->get();
+        return view('sites.home', compact('posts','courses','events'));
     }
 
     public function about()
@@ -42,12 +45,27 @@ class SiteController extends Controller
             $siswa->avatar = $request->file('avatar')->getClientOriginalName();
            
         } $siswa->save();
+
+        // disini sintaks dari laravel. yang berguna untuk post email kita.
+        \Mail::raw('Testing web notifikasi email. maaf mengganggu ketertiban umum ya. maklum anak magang, syukuri apa adanya aja ya masya Allah :D '.' '.$user->name, function ($message) use($user) {
+            $message->to($user->email, $user->name);
+            $message->subject('#Testing notifikasi');
+            $message->from('ariqsaja99@gmail.com','Verified account');
+            $message->replyTo('ariqsaja992@gmail.com', 'Verified account');
+            $message->priority(1);
+            
+            //Values: 1 = High, 3 = Normal, 5 = Low
+        });
+
+        \Mail::to($user->email)->send(new NotifPendaftaranSiswa);
     	return redirect('/')->with('sukses','Data berhasil di input');
    	}
 
     public function singlePost($slug)
     {
-        $post = Post::where('slug', '=' ,$slug)->first();
+        // Menampilkan data dalam table post yang sesuai dengan parameter
+        $post = Post::where('slug', '=' ,$slug)->first(); 
+
         return view('sites.singlepost', compact(['post']));
     }
 

@@ -168,6 +168,7 @@ return [
             Maatwebsite\Excel\ExcelServiceProvider::class,
             UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
             Intervention\Image\ImageServiceProvider::class,
+            Yajra\DataTables\DataTablesServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -204,6 +205,7 @@ return [
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
         'DB' => Illuminate\Support\Facades\DB::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Event' => Illuminate\Support\Facades\Event::class,

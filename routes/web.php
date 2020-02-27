@@ -10,6 +10,24 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Route::get('tanggallahir', function(){
+// 	foreach (\App\Siswa::all() as $siswa) {
+// 		$tanggal_mulai= strtotime('1995-01-01');
+// 		$tanggal_akhir= strtotime('1999-01-01');
+
+// 		$tanggal= rand($tanggal_mulai,$tanggal_akhir);
+// 		$tgl_lahir= date('Y-m-d' ,$tanggal);
+// 		$siswa->tgl_lahir= $tgl_lahir;
+// 		$siswa->save();
+// 	}
+// }); code untuk logic membuat field tgl_lahir dari thn 1995 hingg 1999
+
+	Route::get('trick',[
+	'uses' => 'TrickController@pertama',
+	'as' => 'trick.pertama'
+]);
+
 // tampilan home
 Route::get('/','SiteController@home');
 Route::get('/register','SiteController@register');
@@ -37,6 +55,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 	Route::get('/siswa/{id}/{idmapel}/deletenilai','SiswaController@deletenilai');
 	Route::get('/siswa/exportExcel/','SiswaController@exportExcel');
 	Route::get('/siswa/exportPDF/','SiswaController@exportPDF');
+	Route::post('/siswa/import/','SiswaController@importExcel')->name('siswa.import');
 
 	// Guru Featured
 	Route::get('/guru/{id}/profile','GuruController@profile');
@@ -55,6 +74,8 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 	'uses' => 'PostController@create',
 	'as' => 'post.create'
 	]);
+
+	
 
 	// Edit Blog
 	Route::get('/post/{post}/edit',[
@@ -75,13 +96,24 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 	]);
 });
 
+// Check hanya siswa yang bisa kesini
+Route::group(['middleware' => ['auth','checkRole:siswa']],function(){
+	Route::get('profilsaya','SiswaController@profilsaya');
+	});
+
 // Check admin & user bisa kesini
 Route::group(['middleware' => ['auth','checkRole:admin,siswa']],function(){
 	Route::get('/dashboard','DashboardController@index');
 
+	Route::get('getdatasiswa',[
+	'uses' => 'SiswaController@get',
+	'as' => 'ajax.get'
+	]);
+
+// tampilan posting blog slugnya
 Route::get('/{slug}',[
 	'uses' => 'SiteController@singlePost',
 	'as' => 'site.single.post'
-]);
+	]);
 
 });
