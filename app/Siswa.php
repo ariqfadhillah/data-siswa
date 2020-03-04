@@ -22,6 +22,7 @@ class Siswa extends Model
     public function mapel()
     {
     	return $this->belongsToMany(Mapel::class)->withPivot(['nilai'])->withTimeStamps();
+            // artinya model ini memiliki banyak data dari model yang didalam kurung
     }
 
     public function nilaiRataRata()
@@ -62,6 +63,7 @@ class Siswa extends Model
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault(['avatar' => 'default.jpg']);
+        //artinya model ini berarti dimiliki hubungan oleh user
     }
     
 }
